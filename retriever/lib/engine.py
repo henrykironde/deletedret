@@ -26,6 +26,7 @@ from retriever.lib.tools import (
     walk_relative_path,
     excel_csv,
 )
+from retriever.lib.engine_tools import json2csv
 from retriever.lib.warning import Warning
 
 
@@ -580,6 +581,14 @@ class Engine():
         """Convert excel files to csv files."""
         if self.find_file(src_path) and excel_info:
             excel_csv(src_path, path_to_csv, excel_info, encoding)
+
+    def json_to_csv(self, src_path, path_to_csv, x, encoding=ENCODING):
+        json2csv(input_file=src_path,
+                 output_file=path_to_csv,
+                 header_values=x,
+                 encoding=encoding,
+                 row_key=None)
+
 
     def extract_gz(
         self,

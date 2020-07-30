@@ -176,6 +176,17 @@ class BasicTextTemplate(Script):
             self.engine.excel_to_csv(src_path, path_to_csv, table_obj.xls_sheets,
                                      self.encoding)
 
+        if hasattr(table_obj, "json_data"):
+            src_path = self.engine.format_filename(table_obj.json_data)
+            path_to_csv = self.engine.format_filename(table_obj.path)
+            self.engine.download_file(url, table_obj.json_data)
+            x = None
+            if hasattr(table_obj, "schema") and hasattr(table_obj.schema,"fields"):
+                if table_obj.schema.fields:
+                    x = table_obj.schema.fields
+
+            self.engine.json_to_csv(src_path, path_to_csv, x)
+
         if hasattr(table_obj, "path"):
             self.engine.auto_create_table(table_obj, url=url, filename=table_obj.path)
         else:
