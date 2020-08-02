@@ -170,7 +170,7 @@ def walker(dictionary, row_key=None, header_values=None, rows=[], normalize=Fals
             if normalize:
                 rows.extend(json_normalize(dictionary[row_key]).values)
             else:
-                rows = walker(dictionary[row_key],
+                rows, h = walker(dictionary[row_key],
                               row_key,
                               header_values,
                               rows,
@@ -181,11 +181,11 @@ def walker(dictionary, row_key=None, header_values=None, rows=[], normalize=Fals
             for item in dictionary.values():
                 if isinstance(item, list):
                     for ls in item:
-                        rows = walker(ls, row_key, header_values, rows)
+                        rows, h = walker(ls, row_key, header_values, rows)
 
     if isinstance(dictionary, list):
         for item in dictionary:
-            rows = walker(item, row_key, header_values, rows, normalize=True)
+            rows, h = walker(item, row_key, header_values, rows, normalize=True)
 
     return rows, header_values
 
